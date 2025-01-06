@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className="flex flex-col justify-center items-center border-b-4 border-white header-div h-[100vh] relative">
+    <div className=" header-div flex flex-col justify-center items-center border-b-4 border-white h-[100vh] relative">
       <div className="flex flex-col md:flex-row gap-[20px] items-center justify-center">
         <div className="flex justify-center flex-col w-full md:w-auto">
           <img
