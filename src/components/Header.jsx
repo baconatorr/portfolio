@@ -26,7 +26,7 @@ export default function Header() {
             >
               Full Stack
             </span>{" "}
-            Web Developer ,
+            Web Developer,
           </h1>
           <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-center md:text-left">
             <span
@@ -40,8 +40,7 @@ export default function Header() {
               }}
             >
               Student
-            </span>{" "}
-            , and
+            </span>, and
           </h1>
           <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-center md:text-left">
             <span
