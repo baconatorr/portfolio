@@ -9,7 +9,7 @@
 
 body {
   @apply bg-repeat bg-center bg-[length:500px_400px];
-  background-image: url("bg4.png");
+  background-image: url("./assets/bg4.png");
   font-family: "Inter", sans-serif;
 }
 
