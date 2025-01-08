@@ -1,9 +1,14 @@
-import Header from "./components/Header.jsx";
+import Header from "./pages/Header.jsx";
+import Navbar from "./components/Navbar.jsx";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Header />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Header className="hero" />} />
+      </Routes>
     </>
   );
 }
