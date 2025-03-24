@@ -1,0 +1,40 @@
+/* src/styles/fonts.css */
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 700; /* Bold */
+  src: url('/fonts/PPPangaia-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 700; /* Bold Italic */
+  font-style: italic;
+  src: url('/fonts/PPPangaia-BoldItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 500; /* Medium */
+  src: url('/fonts/PPPangaia-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 500; /* Medium Italic */
+  font-style: italic;
+  src: url('/fonts/PPPangaia-MediumItalic.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 200; /* Ultralight */
+  src: url('/fonts/PPPangaia-Ultralight.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPPangaia';
+  font-weight: 200; /* Ultralight Italic */
+  font-style: italic;
+  src: url('/fonts/PPPangaia-UltralightItalic.otf') format('opentype');
+}
