@@ -26,7 +26,7 @@ const rest = {
   },
 };
 
-export default function Hero() {
+export default function Hero({ scrollToAbout }) {
   const hello = "hello,".split("");
   return (
     <>
@@ -69,7 +69,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
         >
-          <button className="py-4 px-10 bg-white text-[#050505] rounded-full font-pppangaia text-2xl">
+          <button className="py-4 px-10 bg-white text-[#050505] rounded-full font-pppangaia text-2xl" onClick={scrollToAbout}>
             learn more 👇
           </button>
         </motion.div>
