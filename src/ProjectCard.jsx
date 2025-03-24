@@ -4,6 +4,7 @@ import matharooImg from "./assets/matharoo.png";
 import wordpyraImg from "./assets/wordpyra.png";
 import { FaPlayCircle, FaPauseCircle, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { BsFillSkipEndBtnFill, BsFillSkipStartBtnFill } from "react-icons/bs";
+import { FiArrowLeft } from "react-icons/fi";
 
 const projects = [
   {
@@ -28,6 +29,7 @@ const Card = () => {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(true);
 
   const nextProject = () => {
     setIndex((prev) => (prev + 1) % projects.length);
@@ -39,7 +41,7 @@ const Card = () => {
     resetPlayback();
   };
 
-  const togglePlay = () => setPlaying((prev) => !prev);
+  const togglePlay = () => {setPlaying((prev) => !prev); setShowTooltip(false)};
 
   const resetPlayback = () => {
     setProgress(0);
@@ -51,7 +53,7 @@ const Card = () => {
     if (playing && progress < 100) {
       interval = setInterval(() => {
         setProgress((prev) => Math.min(prev + 0.5, 100));
-      }, 100);
+      }, 1000);
     }
     return () => clearInterval(interval);
   }, [playing, progress]);
@@ -102,12 +104,12 @@ const Card = () => {
 
       {/* Text Info */}
       <div className="text-center">
-        <h2 className="text-white text-3xl font-bold mb-1">{projects[index].title}</h2>
-        <p className="text-gray-300 text-md">{projects[index].description}</p>
+        <h2 className="text-white text-3xl font-bold mb-1">{projects[index].title.toLowerCase()}</h2>
+        <p className="text-gray-300 text-md font-pppangaia">{projects[index].description.toLowerCase()}</p>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-center gap-8 text-emerald-400 text-4xl">
+      <div className="flex items-center justify-center gap-8 text-emerald-400 text-4xl relative">
         <BsFillSkipStartBtnFill
           onClick={prevProject}
           className="cursor-pointer hover:scale-110 transition-transform"
@@ -123,10 +125,26 @@ const Card = () => {
             className="cursor-pointer hover:scale-110 transition-transform"
           />
         )}
-        <BsFillSkipEndBtnFill
-          onClick={nextProject}
-          className="cursor-pointer hover:scale-110 transition-transform"
-        />
+        <div className="relative">
+          <BsFillSkipEndBtnFill
+            onClick={nextProject}
+            className="cursor-pointer hover:scale-110 transition-transform"
+          />
+          {showTooltip && (
+            <motion.div
+              className="absolute flex transform left-10 -top-0 items-center"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1, duration: 0.5 }}
+            >
+               <FiArrowLeft className="text-emerald-400 text-xl" />
+              <div className="bg-[#121212] border font-pppangaia border-emerald-400 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap">
+                press here to view the next project.
+              </div>
+             
+            </motion.div>
+          )}
+        </div>
       </div>
 
       {/* Progress Bar */}
