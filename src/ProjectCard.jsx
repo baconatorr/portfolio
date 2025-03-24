@@ -1,71 +1,162 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import matharooImg from "./assets/matharoo.png";
 import wordpyraImg from "./assets/wordpyra.png";
-import { FaPlayCircle } from "react-icons/fa";
-import { FaPauseCircle } from "react-icons/fa";
-import { BsFillSkipEndBtnFill } from "react-icons/bs";
-import { BsFillSkipStartBtnFill } from "react-icons/bs";
+import { FaPlayCircle, FaPauseCircle, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { BsFillSkipEndBtnFill, BsFillSkipStartBtnFill } from "react-icons/bs";
 
-const Card = ({ image }) => {
-  const projects = {
-    0: {
-      title: "Matharoo",
-      description: "math education software",
-      image: matharooImg,
-    },
-    1: {
-      title: "WordPyra",
-      description: "word pyramid game",
-      image: wordpyraImg,
-    },
+const projects = [
+  {
+    title: "Matharoo",
+    description: "Math education platform with skill trees.",
+    image: matharooImg,
+    github: "https://github.com/your-matharoo",
+    live: "https://learnwithmatharoo.com",
+    duration: "3:46",
+  },
+  {
+    title: "WordPyra",
+    description: "A creative word pyramid puzzle game.",
+    image: wordpyraImg,
+    github: "https://github.com/your-wordpyra",
+    live: "https://wordpyra.com",
+    duration: "2:15",
+  },
+];
+
+const Card = () => {
+  const [index, setIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const nextProject = () => {
+    setIndex((prev) => (prev + 1) % projects.length);
+    resetPlayback();
   };
 
-  const [index, setIndex] = useState(0);
+  const prevProject = () => {
+    setIndex((prev) => (prev - 1 + projects.length) % projects.length);
+    resetPlayback();
+  };
 
-  function updateIndex() {
-    setIndex((index) => (index === 0 ? 1 : 0));
-  }
+  const togglePlay = () => setPlaying((prev) => !prev);
+
+  const resetPlayback = () => {
+    setProgress(0);
+    setPlaying(false);
+  };
+
+  useEffect(() => {
+    let interval;
+    if (playing && progress < 100) {
+      interval = setInterval(() => {
+        setProgress((prev) => Math.min(prev + 0.5, 100));
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [playing, progress]);
 
   return (
-    <div className="relative min-w-[600px] min-h-[350px] bg-[#191414] rounded-xl p-8 flex flex-col justify-center items-center gap-6 shadow-lg">
-      <div className="w-[500px] h-[375px] bg-gray-700 rounded-lg overflow-hidden">
+    <motion.div
+      className="relative w-full max-w-[600px] bg-[#121212] rounded-3xl p-6 flex flex-col items-center gap-6 shadow-2xl border border-[#2a2a2a]"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Project Image */}
+      <motion.div
+        className="relative w-full h-[300px] bg-gray-800 rounded-2xl overflow-hidden group"
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3 }}
+      >
         <img
           src={projects[index].image}
-          alt="Album cover"
+          alt={projects[index].title}
           className="w-full h-full object-cover"
         />
-      </div>
-      <div className="relative w-full flex items-center gap-6 mb-6">
-        <div className="flex flex-col pl-4">
-          <p className="text-white text-3xl font-extrabold">
-            {projects[index].title}
-          </p>
-          <p className="text-white text-lg opacity-80">
-            {projects[index].description}
-          </p>
-        </div>
+
+        {/* Overlay Buttons */}
+        <motion.div
+          className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-6 transition-opacity duration-300"
+        >
+          <a
+            href={projects[index].github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-emerald-400 text-3xl"
+            title="GitHub"
+          >
+            <FaGithub />
+          </a>
+          <a
+            href={projects[index].live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-emerald-400 text-3xl"
+            title="Live Demo"
+          >
+            <FaExternalLinkAlt />
+          </a>
+        </motion.div>
+      </motion.div>
+
+      {/* Text Info */}
+      <div className="text-center">
+        <h2 className="text-white text-3xl font-bold mb-1">{projects[index].title}</h2>
+        <p className="text-gray-300 text-md">{projects[index].description}</p>
       </div>
 
-      <div className="flex text-emerald-400 text-4xl gap-8">
-        <BsFillSkipStartBtnFill />
-        <FaPauseCircle />
-        <FaPlayCircle />
-        <BsFillSkipEndBtnFill onClick={updateIndex} />
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-8 text-emerald-400 text-4xl">
+        <BsFillSkipStartBtnFill
+          onClick={prevProject}
+          className="cursor-pointer hover:scale-110 transition-transform"
+        />
+        {playing ? (
+          <FaPauseCircle
+            onClick={togglePlay}
+            className="cursor-pointer hover:scale-110 transition-transform"
+          />
+        ) : (
+          <FaPlayCircle
+            onClick={togglePlay}
+            className="cursor-pointer hover:scale-110 transition-transform"
+          />
+        )}
+        <BsFillSkipEndBtnFill
+          onClick={nextProject}
+          className="cursor-pointer hover:scale-110 transition-transform"
+        />
       </div>
 
-      <div className="w-full flex items-center gap-4">
-        <p className="text-white text-lg bg-black bg-opacity-60 py-1 px-4 rounded-lg">
-          1:31
-        </p>
-        <div className="w-[90%] bg-[#5e5e5e] h-[0.5rem] rounded-[4px]">
-          <div className="w-[42%] bg-emerald-400 h-full rounded-[4px]" />
+      {/* Progress Bar */}
+      <div className="w-full flex items-center gap-3 px-2">
+        <span className="text-white text-sm bg-black bg-opacity-40 px-2 py-1 rounded-md">
+          {formatTime(progress, projects[index].duration)}
+        </span>
+        <div className="flex-1 h-2 bg-gray-600 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-emerald-400 rounded-full"
+            style={{ width: `${progress}%` }}
+            transition={{ duration: 0.2 }}
+          />
         </div>
-        <p className="text-white text-lg bg-black bg-opacity-60 py-1 px-4 rounded-lg">
-          3:46
-        </p>
+        <span className="text-white text-sm bg-black bg-opacity-40 px-2 py-1 rounded-md">
+          {projects[index].duration}
+        </span>
       </div>
-    </div>
+    </motion.div>
   );
 };
+
+// Utility: Convert percent progress to time string
+function formatTime(progressPercent, totalTime) {
+  const [min, sec] = totalTime.split(":").map(Number);
+  const totalSeconds = min * 60 + sec;
+  const currentSeconds = Math.floor((progressPercent / 100) * totalSeconds);
+  const displayMin = Math.floor(currentSeconds / 60);
+  const displaySec = currentSeconds % 60;
+  return `${displayMin}:${displaySec.toString().padStart(2, "0")}`;
+}
 
 export default Card;
