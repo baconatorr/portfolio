@@ -5,10 +5,12 @@ import "./index.css";
 import App from "./App";
 
 import AnimatedCursor from "react-animated-cursor";
+import AudioButton from "./AudioButton";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AnimatedCursor />
+    <AudioButton />
     <App />
   </StrictMode>
 );

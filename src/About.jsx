@@ -35,7 +35,7 @@ export default function About() {
       {/* Background noise overlay */}
       <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 pointer-events-none z-0" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-7xl">
+      <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-7xl">
         {/* Vinyl Animation */}
         <motion.div
           className="relative flex items-center justify-center [transform-style:preserve-3d]"
