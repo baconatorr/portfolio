@@ -2,8 +2,6 @@ import React from 'react'
 import Image from 'next/image'
 import Accordian from './Accordian'
 
-import Bg from './Bg';
-
 
 export default function Home() {
   return (
