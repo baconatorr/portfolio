@@ -18,7 +18,11 @@ const inter = Inter({
 export const metadata = {
   title: "Mason Williams - Portfolio",
   description: "Student at DuPont Manual High School who loves helping people learn",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }) {
