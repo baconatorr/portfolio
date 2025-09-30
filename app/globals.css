@@ -17,3 +17,84 @@
 .element::-webkit-scrollbar {
   display: none;
 }
+
+/* Custom cursor for interactive elements */
+* {
+  cursor: default;
+}
+
+button, a, [role="button"] {
+  cursor: pointer;
+}
+
+/* Subtle geometric accents */
+.geometric-accent {
+  position: relative;
+}
+
+.geometric-accent::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.geometric-accent:hover::before {
+  border-color: #3b82f6;
+  opacity: 0.6;
+}
+
+/* Change highlight color when hovering the entire section */
+.geometric-accent:hover mark {
+  background-color: #dbeafe !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus styles */
+*:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Subtle pulse animation for interactive elements */
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+}
+
+.hover-pulse:hover {
+  animation: subtlePulse 2s ease-in-out infinite;
+}

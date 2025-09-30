@@ -18,35 +18,60 @@ export default function Accordion({
   const videoWrapRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Scroll-based tilt effect
+  // Scroll-based tilt effect (disabled on mobile for performance)
   useEffect(() => {
     const el = videoWrapRef.current;
     if (!el) return;
 
+    // Check for reduced motion preference
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
       setTiltDeg(0);
       return;
     }
 
+    // Disable tilt effect on mobile devices (screen width < 768px)
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      setTiltDeg(0);
+      return;
+    }
+
     let raf = 0;
+    let lastScrollY = window.scrollY;
+    
     const onScroll = () => {
       if (raf) return;
+      
+      // Throttle scroll events
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) < 10) return;
+      lastScrollY = currentScrollY;
+      
       raf = window.requestAnimationFrame(() => {
         raf = 0;
         const rect = el.getBoundingClientRect();
-        const viewportH = window.innerHeight || 1;
-        const centerDelta = Math.abs(
-          rect.top + rect.height / 2 - viewportH / 2
-        );
-        const maxTilt = 16;
-        const t = Math.min(1, centerDelta / (viewportH / 2));
-        const deg = Math.max(0, Math.min(maxTilt, maxTilt * t));
-        setTiltDeg(deg);
+        const viewportH = window.innerHeight;
+        const elementCenter = rect.top + rect.height / 2;
+        const viewportCenter = viewportH / 2;
+        
+        // Calculate distance from viewport center
+        const distance = Math.abs(elementCenter - viewportCenter);
+        const maxDistance = viewportH / 2;
+        
+        // Apply tilt based on distance (closer to center = more tilt)
+        const maxTilt = 8; // Reduced from 16 for subtler effect
+        const tiltRatio = Math.min(distance / maxDistance, 1);
+        const tilt = maxTilt * (1 - tiltRatio);
+        
+        setTiltDeg(Math.max(0, tilt));
       });
     };
 
-    onScroll(); // initial run
+    // Initial calculation
+    onScroll();
+    
+    // Add event listeners
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
@@ -87,11 +112,11 @@ export default function Accordion({
     <div
       className={`w-full ${className} ${
         isOpen && "bg-gray-50"
-      } py-4 px-8 rounded-lg`}
+      } py-4 px-4 sm:px-6 md:px-8 rounded-lg transition-all duration-300 hover:shadow-md hover:scale-[1.02] border border-transparent hover:border-blue-200`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between py-2 font-inter text-2xl select-none outline-none transition-colors hover:opacity-90 focus-visible:ring-2 focus-visible:ring-black/10 focus-visible:ring-offset-2 rounded-md"
+        className="flex w-full items-center justify-between py-2 font-inter text-xl sm:text-2xl select-none outline-none transition-all duration-300 hover:tracking-wide hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 rounded-md"
         aria-expanded={isOpen}
         aria-controls={regionId}
       >
@@ -113,7 +138,7 @@ export default function Accordion({
         }`}
       >
         <div ref={contentRef} className="overflow-hidden">
-          <div className="pt-1 pb-3 font-inter text-lg + break-words whitespace-normal">
+          <div className="pt-1 pb-3 font-inter text-base sm:text-lg + break-words whitespace-normal">
             {content}
 
             {video ? (
@@ -123,14 +148,10 @@ export default function Accordion({
                   className="relative mx-auto max-w-4xl mt-6 will-change-transform"
                   style={{
                     transform: `perspective(1000px) rotateX(${tiltDeg}deg)`,
-                    transition: "transform 120ms ease-out",
+                    transition: "transform 150ms ease-out",
                   }}
                 >
-                  <div className="relative">
-                    <div
-                      className="w-full overflow-hidden shadow-xl rounded-md"
-                      style={{ transform: "translateZ(0px)", zIndex: 1 }}
-                    >
+                  <div className="w-full overflow-hidden shadow-xl rounded-md">
                       <video
                         ref={videoRef}
                         className="w-full h-full object-cover"
@@ -143,7 +164,6 @@ export default function Accordion({
                       >
                         <source src={video} type="video/mp4" />
                       </video>
-                    </div>
                   </div>
                 </div>
 
@@ -153,7 +173,7 @@ export default function Accordion({
                       href={link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block font-inter text-lg underline underline-offset-4 hover:opacity-80 transition"
+                      className="inline-block font-inter text-base sm:text-lg underline underline-offset-4 hover:opacity-80 transition-all duration-300 hover:text-blue-600 hover:tracking-wide"
                     >
                       View project ↗
                     </a>
@@ -161,7 +181,7 @@ export default function Accordion({
                 )}
               </>
             ) : (
-              <div className="font-inter text-lg mt-2 opacity-70">
+              <div className="font-inter text-base sm:text-lg mt-2 opacity-70">
                 sorry, no video for this project :&#40;
               </div>
             )}
