@@ -46,10 +46,10 @@ export default function Home() {
             <mark className="transition-all duration-300 hover:bg-blue-100">about me</mark>
           </div>
           <div className="font-inter text-sm sm:text-lg p-1 sm:p-2 leading-relaxed">
-             <p>i've always loved learning and teaching. i found my love for teaching in 5th grade, tutoring my sister after school. today, i tutor my friends- ive helped them learn how to code, ran AP stats study sessions, and more. in my free time i like to code (obviously) and study math.</p>
+             <p>i've always loved learning and teaching. i found my love for teaching in 5th grade, tutoring my sister after school. today, i tutor my friends - i've helped them learn how to code, ran AP stats study sessions, and more. in my free time i like to code (obviously) and study math.</p>
              <p className="mt-3 sm:mt-4">i specifically enjoy web development because it is the most accessible software medium, allowing me to reach people all over the world. my goal in life is to help people learn, and i think software engineering is the best way to do that.</p>
              <p className="mt-3 sm:mt-4">i've recently been exploring things like machine learning and LLMs too. it's exciting to see the potential of these technologies, and maybe one day i'll be able to contribute to them.</p>
-             <p className="mt-3 sm:mt-4">in 10 years, i see myself working in the startup space- im obsessed with building innovative things. i love watching my ideas grow into reality, and i think thats a great way to live.</p>
+             <p className="mt-3 sm:mt-4">in 10 years, i see myself working in the startup space - i'm obsessed with building innovative things. i love watching my ideas grow into reality, and i think that's a great way to live.</p>
           </div>
         </div>
 
