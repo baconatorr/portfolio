@@ -58,7 +58,7 @@ export default function Home() {
           <div className="font-inter font-semibold text-xl sm:text-3xl py-1 sm:py-2 transition-all duration-300 hover:tracking-wide geometric-accent">
             <mark className="transition-all duration-300 hover:bg-blue-100">heres what i've done</mark>
           </div>
-          <Accordian title="satmaxxing" content="sat prep, gamified. built with next.js and supabase. softlaunch hit 500 users" video="/satmaxxing.mp4" link="https://satmaxxing.com" />
+          <Accordian title="satmaxxing" content="sat prep, gamified. built with next.js and supabase. softlaunch hit 500 users (and counting)" video="/satmaxxing.mp4" link="https://satmaxxing.com" />
           <Accordian title="study or starve" content="study to feed your virtual pet or it dies! built for hack the track hackathon. again next.js" video="/study-or-starve.mp4" link="https://studyorstarve.com"/>
           <Accordian title="prompt injection framework" content="mathematical framework to detect prompt injections attempts using graph and information theory. still in the works."/>
         </div>
